@@ -7,14 +7,14 @@ function renderGalleryItems() {
   return galleryItems
     .map(
       ({ original, preview, description }) =>
-        `<a class="gallery__item" href="${original}">
+        `<li class="gallery__item"><a class="gallery__link" href="${original}">
   <img class="gallery__image" src="${preview}" alt="${description}" />
-</a>`
+</a></li>`
     )
     .join("");
 }
 
-let gallery = new SimpleLightbox(".gallery a", {
+new SimpleLightbox(".gallery a", {
   captionsData: "alt",
   captionDelay: 250,
   scrollZoomFactor: false,
