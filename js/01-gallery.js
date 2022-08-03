@@ -4,8 +4,8 @@ const galleryEl = document.querySelector(".gallery");
 
 const renderGalleryItems = () =>
   galleryItems.reduce(
-    (previousValue, { original, preview, description }) =>
-      (previousValue += `
+    (markup, { original, preview, description }) =>
+      (markup += `
   <div class="gallery__item">
   <a class="gallery__link" href="${original}">
     <img
