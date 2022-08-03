@@ -4,11 +4,13 @@ const galleryEl = document.querySelector(".gallery");
 
 galleryEl.insertAdjacentHTML("beforeend", renderGalleryItems());
 
+galleryEl.addEventListener("click", onImageClick);
+
 function renderGalleryItems() {
-  return galleryItems.reduce(
-    (markup, { original, preview, description }) =>
-      (markup += `
-  <div class="gallery__item">
+  return galleryItems
+    .map(
+      ({ original, preview, description }) =>
+        `<div class="gallery__item">
   <a class="gallery__link" href="${original}">
     <img
       class="gallery__image"
@@ -18,12 +20,10 @@ function renderGalleryItems() {
     />
   </a>
   </div>
-`),
-    ""
-  );
+`
+    )
+    .join("");
 }
-
-galleryEl.addEventListener("click", onImageClick);
 
 function onImageClick(event) {
   if (event.target.nodeName !== "IMG") {
@@ -32,19 +32,28 @@ function onImageClick(event) {
   event.preventDefault();
 
   event.target.src = event.target.dataset.source;
+  const markup = event.target.outerHTML;
 
-  basicLightbox
-    .create(event.target.outerHTML, { onShow: closeOnHotKey })
-    .show();
+  // const markup = `<img
+  //     class="gallery__image"
+  //     src="${event.target.dataset.source}"
+  //     alt="${event.target.description}"
+  //   />`;
 
-  function closeOnHotKey(instance) {
-    const onCloseKeyDown = (event) => {
-      if (event.key === "Escape") {
-        instance.close();
-        galleryEl.removeEventListener("keydown", onCloseKeyDown);
-      }
-    };
+  const modal = basicLightbox.create(markup, {
+    onShow: () => {
+      addEventListener("keydown", closeOnHotKey);
+    },
+    onClose: () => {
+      removeEventListener("keydown", closeOnHotKey);
+    },
+  });
 
-    galleryEl.addEventListener("keydown", onCloseKeyDown);
+  modal.show();
+
+  function closeOnHotKey(event) {
+    if (event.code === "Escape") {
+      modal.close();
+    }
   }
 }
