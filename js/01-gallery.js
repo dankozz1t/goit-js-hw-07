@@ -31,14 +31,11 @@ function onImageClick(event) {
   }
   event.preventDefault();
 
-  event.target.src = event.target.dataset.source;
-  const markup = event.target.outerHTML;
-
-  // const markup = `<img
-  //     class="gallery__image"
-  //     src="${event.target.dataset.source}"
-  //     alt="${event.target.description}"
-  //   />`;
+  const markup = `<img
+      class="gallery__image"
+      src="${event.target.dataset.source}"
+      alt="${event.target.description}"
+    />`;
 
   const modal = basicLightbox.create(markup, {
     onShow: () => {
