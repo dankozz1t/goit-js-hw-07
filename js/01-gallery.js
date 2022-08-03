@@ -2,8 +2,10 @@ import { galleryItems } from "./gallery-items.js";
 
 const galleryEl = document.querySelector(".gallery");
 
-const renderGalleryItems = () =>
-  galleryItems.reduce(
+galleryEl.insertAdjacentHTML("beforeend", renderGalleryItems());
+
+function renderGalleryItems() {
+  return galleryItems.reduce(
     (markup, { original, preview, description }) =>
       (markup += `
   <div class="gallery__item">
@@ -19,8 +21,7 @@ const renderGalleryItems = () =>
 `),
     ""
   );
-
-galleryEl.insertAdjacentHTML("beforeend", renderGalleryItems());
+}
 
 galleryEl.addEventListener("click", onImageClick);
 
