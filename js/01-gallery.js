@@ -22,9 +22,7 @@ const renderGalleryItems = () =>
 
 galleryEl.insertAdjacentHTML("beforeend", renderGalleryItems());
 
-const galleryLink = document.querySelector(".gallery");
-
-galleryLink.addEventListener("click", onImageClick);
+galleryEl.addEventListener("click", onImageClick);
 
 function onImageClick(event) {
   event.preventDefault();
